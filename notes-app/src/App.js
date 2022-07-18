@@ -4,6 +4,7 @@ import Note from "./Note";
 const App = (props) => {
   const [notes, setNotes] = useState(props.notes);
   const [newNote, setnewNote] = useState("a new note");
+  const [showAll, setshowAll] = useState(true);
 
   const addNote = (event) => {
     event.preventDefault();
@@ -22,12 +23,19 @@ const App = (props) => {
   const handleNoteChange = (event) => {
     setnewNote(event.target.value);
   };
+  const random = () => setshowAll(!showAll);
+
+  const notesToShow = showAll
+    ? notes
+    : notes.filter((tog) => tog.important === true);
 
   return (
     <>
       <h1>Notes</h1>
+      {/* </><button onClick={() => setshowAll(!showAll)}> */}
+      <button onClick={random}>show {showAll ? "All" : "Important"}</button>
       <ul>
-        {notes.map((note) => (
+        {notesToShow.map((note) => (
           <Note key={note.id} note={note} />
         ))}
       </ul>
