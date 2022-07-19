@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import axios from "axios";
+//import axios from "axios";
 import App from "./App";
 
 // const notes = [
@@ -24,20 +24,20 @@ import App from "./App";
 //   },
 // ];
 
-axios
-  .get("http://localhost:3001/notes")
-  .then((Response) => {
-    console.log(Response);
-    const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(
-      <React.StrictMode>
-        <App notes={Response.data} />
-      </React.StrictMode>
-    );
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// axios
+//   .get("http://localhost:3001/notes")
+//   .then((Response) => {
+//     console.log(Response);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+// })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 
 // let axe = axios.get("http://localhost:3001/notes1");
 // console.log(axe);   ----> it gives promise object
