@@ -23,16 +23,28 @@ import App from "./App";
 //     important: true,
 //   },
 // ];
-axios.get("http://localhost:3001/notes").then((para) => {
-  console.log(para);
-  const root = ReactDOM.createRoot(document.getElementById("root"));
-  root.render(
-    <React.StrictMode>
-      <App notes={para.data} />
-    </React.StrictMode>
-  );
-});
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+axios
+  .get("http://localhost:3001/notes")
+  .then((Response) => {
+    console.log(Response);
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(
+      <React.StrictMode>
+        <App notes={Response.data} />
+      </React.StrictMode>
+    );
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// let axe = axios.get("http://localhost:3001/notes1");
+// console.log(axe);
+
+// axe.then((res) => {
+//   console.log(res);
+// });
+// axe.catch((err) => {
+//   console.log(err);
+// });
