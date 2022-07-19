@@ -40,11 +40,11 @@ axios
   });
 
 // let axe = axios.get("http://localhost:3001/notes1");
-// console.log(axe);
+// console.log(axe);   ----> it gives promise object
 
 // axe.then((res) => {
-//   console.log(res);
+//   console.log(res); //(res.data)   ----> it gives result or response, it'll be executed only after web api completed successfull
 // });
 // axe.catch((err) => {
-//   console.log(err);
+//   console.log(err); //(err.msg)   -----> it gives err msg if given url is not available
 // });
