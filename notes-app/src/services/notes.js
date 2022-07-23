@@ -13,8 +13,7 @@ const update = (id, newObject) => {
   return axios.put(`${baseUrl}/${id}`, newObject);
 };
 
-export default {
-  getAll: getAll,
-  create: create,
-  update: update,
-};
+export default { getAll, create, update };
+//at lt key of obj and at rt variable defined inside module since, both are same we wrote like this.
+
+//eg. => getAll: getAll

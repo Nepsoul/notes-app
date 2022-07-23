@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
 import noteService from "./services/notes";
 
 import Note from "./Note";
-import getAll from "./services/notes";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -13,17 +12,23 @@ const App = () => {
   const toggleImportanceOf = (id) => {
     const url = `http://localhost:3001/notes/${id}`;
     const note = notes.find((n) => n.id === id);
+
     const changedNote = { ...note, important: !note.important };
-
-    noteService.update(id, changedNote).then((response) => {
-      setNotes(notes.map((note) => (note.id !== id ? note : response.data)));
-    });
-
-    // axios.put(url, changedNote).then((response) => {
-    //   setNotes(notes.map((note) => (note.id !== id ? note : response.data)));
-    // });
+    noteService
+      .update(id, changedNote)
+      .then((response) => {
+        setNotes(notes.map((note) => (note.id !== id ? note : response.data)));
+      })
+      .catch((error) => {
+        alert(`the note '${note.content}' was already deleted from server`);
+        setNotes(notes.filter((n) => n.id !== id));
+      });
     console.log(`importance of ${id} needs to be toggled`);
   };
+
+  // axios.put(url, changedNote).then((response) => {
+  //   setNotes(notes.map((note) => (note.id !== id ? note : response.data)));
+  // });
 
   useEffect(() => {
     noteService.getAll().then((response) => {
