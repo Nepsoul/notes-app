@@ -20,22 +20,22 @@ const App = () => {
   const [newNote, setnewNote] = useState("a new note");
   const [showAll, setshowAll] = useState(true);
 
-  const toggleImportanceOf = (id) => {
-    const url = `http://localhost:3001/notes/${id}`;
-    const note = notes.find((n) => n.id === id);
+  // const toggleImportanceOf = (id) => {
+  //   const url = `http://localhost:3001/notes/${id}`;
+  //   const note = notes.find((n) => n.id === id);
 
-    const changedNote = { ...note, important: !note.important };
-    noteService
-      .update(id, changedNote)
-      .then((response) => {
-        setNotes(notes.map((note) => (note.id !== id ? note : response.data)));
-      })
-      .catch((error) => {
-        alert(`the note '${note.content}' was already deleted from server`);
-        setNotes(notes.filter((n) => n.id !== id));
-      });
-    console.log(`importance of ${id} needs to be toggled`);
-  };
+  //   const changedNote = { ...note, important: !note.important };
+  //   noteService
+  //     .update(id, changedNote)
+  //     .then((response) => {
+  //       setNotes(notes.map((note) => (note.id !== id ? note : response.data)));
+  //     })
+  //     .catch((error) => {
+  //       alert(`the note '${note.content}' was already deleted from server`);
+  //       setNotes(notes.filter((n) => n.id !== id));
+  //     });
+  //   console.log(`importance of ${id} needs to be toggled`);
+  // };
 
   // axios.put(url, changedNote).then((response) => {
   //   setNotes(notes.map((note) => (note.id !== id ? note : response.data)));
@@ -73,10 +73,10 @@ const App = () => {
     // setNotes([...notes, note]);
     // setnewNote(" ");
 
-    noteService.create(note).then((response) => {
-      setNotes(notes.concat(response.data));
-      setnewNote("");
-    });
+    // noteService.create(note).then((response) => {
+    //   setNotes(notes.concat(response.data));
+    //   setnewNote("");
+    // });
 
     // axios.post("http://localhost:3001/notes", note).then((Response) => {
     //   console.log(Response.data);
@@ -105,7 +105,25 @@ const App = () => {
           <Note
             key={note.id}
             note={note}
-            toggleImportance={() => toggleImportanceOf(note.id)}
+            toggleImportance={() => {
+              //toggleImportanceOf(note.id)
+
+              console.log(
+                `button is clicked by function passed from API for id ${note.id}`
+              );
+              //1.make new object from current note with toggled importand field
+              const updatedNote = { ...note, important: !note.important };
+              axios
+                //2.update backend server with the updated object
+                .put(`http://localhost:3001/notes/${note.id}`, updatedNote)
+                .then((response) => {
+                  console.log(response.data);
+                  //3.now, also update the frontend state with the updated note
+                  setNotes(
+                    notes.map((x) => (x.id !== note.id ? x : response.data))
+                  );
+                });
+            }}
           />
         ))}
       </ul>
