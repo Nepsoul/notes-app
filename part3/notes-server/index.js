@@ -36,7 +36,13 @@ App.get("/", (request, response) => {
   // response.setHeader('Content-Type', 'text/html').send("<h1>hello world</h1>")
 });
 App.get("/notes", (request, response) => {
-  response.send(notes);
+  response.json(notes);
+});
+
+App.get("/notes/:id", (request, response) => {
+  const currentId = request.params.id;
+  response.send(`The value passed is ${currentId}`);
+  //by this whatever write in after notes/ it will print as it in browser
 });
 
 App.listen("3001", () => {
