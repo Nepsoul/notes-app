@@ -43,6 +43,7 @@ const App = () => {
 
   useEffect(() => {
     noteService.getAll().then((response) => {
+      console.log(typeof response.data);
       setNotes(response.data);
     });
     //axios.get("http://localhost:3001/notes").then((Response) => {
