@@ -14,6 +14,6 @@ const update = (id, newObject) => {
 };
 
 export default { getAll, create, update };
-//at lt key of obj and at rt variable defined inside module since, both are same we wrote like this.
 
+//at lt key of obj and at rt variable defined inside module since, both are same we wrote like this.
 //eg. => getAll: getAll
