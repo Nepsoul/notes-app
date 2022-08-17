@@ -1,0 +1,15 @@
+GET  http://localhost:3001/notes/
+
+###
+DELETE   http://localhost:3001/notes/
+
+###
+POST    http://localhost:3001/notes/
+content-type: application/json
+
+{
+    "content": "you are lovely",
+    "important": "true" 
+    
+}
+
