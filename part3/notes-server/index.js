@@ -5,6 +5,17 @@ const App = express();
 App.use(cors());
 App.use(express.json());
 
+App.use((request, response, next) => {
+  //console.log("middleware");
+  console.log("Method:", request.method);
+  console.log("Path:  ", request.path);
+  console.log("Body:  ", request.body);
+  console.log("---");
+  // response.someThis = "hello world";
+  next();
+});
+// App.use(express.json());==> if this place at below the app.use give 'undefined', always place at above the code
+
 let notes = [
   {
     id: 1,
@@ -33,7 +44,8 @@ let notes = [
 ];
 
 App.get("/", (request, response) => {
-  response.send("<h1>hello world there</h1>");
+  response.send(response.someThis);
+  // response.send("<h1>hello world there</h1>");
   // response.setHeader('Content-Type', 'text/html').send("<h1>hello world</h1>")
 });
 App.get("/notes", (request, response) => {
@@ -67,6 +79,10 @@ App.post("/notes/", (request, response) => {
   //   console.log(request.body);
   console.log(myIncomingData);
   response.status(201).json(myIncomingData);
+});
+
+App.use((request, response, next) => {
+  response.status(404).send("<h1>No routes found for this request</h1>");
 });
 
 App.listen("3001", () => {
