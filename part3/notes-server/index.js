@@ -88,6 +88,9 @@ App.use((request, response, next) => {
   response.status(404).send("<h1>No routes found for this request</h1>");
 });
 
-App.listen("3001", () => {
-  console.log("server listening 3001");
+//use of default port,if exist otherwise use given port
+const PORT = process.env.PORT || "3001";
+
+App.listen(PORT, () => {
+  console.log(`server listening ${PORT}`);
 });
