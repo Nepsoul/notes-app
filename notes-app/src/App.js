@@ -98,7 +98,7 @@ const App = () => {
 
   return (
     <>
-      <h1>Notes</h1>
+      <h1>Heroku Notes</h1>
       {/* </><button onClick={() => setshowAll(!showAll)}> */}
       <button onClick={random}>show {showAll ? "All" : "Important"}</button>
       <ul>
