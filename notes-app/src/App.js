@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import noteService from "./services/notes";
 
 import Note from "./Note";
+import Footer from "./components/Footer";
 //import axios from "axios";
 
 const App = () => {
@@ -131,6 +132,7 @@ const App = () => {
         <input value={newNote} onChange={handleNoteChange} />
         <button type="submit">submit</button>
       </form>
+      <Footer />
     </>
   );
 };
