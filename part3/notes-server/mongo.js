@@ -31,13 +31,17 @@ mongoose
     // });
 
     // return note.save();
-    //fetching data from database
+
     const notes = Note.find({ important: true });
     return notes;
   })
+  //asynchronous call
   .then((result) => {
-    console.dir(result);
-    console.log("note saved!");
+    result.forEach((note) => {
+      console.log(note);
+    });
+    mongoose.connection.close();
+    // console.log("note saved!");
     return mongoose.connection.close();
   })
   .catch((err) => console.log(err));
