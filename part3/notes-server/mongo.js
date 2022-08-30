@@ -24,15 +24,18 @@ mongoose
   .then((result) => {
     console.log("connected");
 
-    const note = new Note({
-      content: "HTML is Easy",
-      date: new Date(),
-      important: true,
-    });
+    // const note = new Note({
+    //   content: "HTML is Easy",
+    //   date: new Date(),
+    //   important: true,
+    // });
 
-    return note.save();
+    // return note.save();
+    const notes = Note.find(); //fetching data from database
+    return notes;
   })
-  .then(() => {
+  .then((result) => {
+    console.dir(result);
     console.log("note saved!");
     return mongoose.connection.close();
   })
