@@ -17,7 +17,7 @@ const noteSchema = new mongoose.Schema({
   important: Boolean,
 });
 
-const Note = mongoose.model("Vote", noteSchema);
+const Note = mongoose.model("Note", noteSchema);
 
 mongoose
   .connect(url)
@@ -25,13 +25,14 @@ mongoose
     console.log("connected");
 
     // const note = new Note({
-    //   content: "HTML is Easy",
+    //   content: "Js is hard",
     //   date: new Date(),
-    //   important: true,
+    //   important: false,
     // });
 
     // return note.save();
-    const notes = Note.find(); //fetching data from database
+    //fetching data from database
+    const notes = Note.find({ important: true });
     return notes;
   })
   .then((result) => {
