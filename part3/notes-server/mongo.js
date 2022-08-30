@@ -40,7 +40,7 @@ mongoose
     result.forEach((note) => {
       console.log(note);
     });
-    mongoose.connection.close();
+
     // console.log("note saved!");
     return mongoose.connection.close();
   })
