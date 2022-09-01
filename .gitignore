@@ -6,6 +6,9 @@ node_modules/
 .pnp.js
 build/
 
+#environmental variable
+.env
+
 # testing
 /coverage
 
