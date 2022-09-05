@@ -6,10 +6,12 @@ if (process.argv.length < 3) {
   );
   process.exit(1);
 }
-
+//environmental variable passing through terminal
+console.log("hello", process.env.MONGO);
 const password = process.argv[2];
 
 const url = `mongodb+srv://mangoose:${password}@cluster0.oxhvxoo.mongodb.net/MyNotes?retryWrites=true&w=majority`;
+
 const noteSchema = new mongoose.Schema({
   content: String,
   date: Date,
