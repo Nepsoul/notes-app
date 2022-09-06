@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 
+//env variable passing through cloud service
+const Note = require("./models/note");
+
 const App = express();
 
 //App.use..... is middleware
