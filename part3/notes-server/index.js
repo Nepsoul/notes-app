@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-//env variable passing through cloud service
+//importing Note from database through env variable
 const Note = require("./models/note");
 
 const App = express();
@@ -22,32 +22,32 @@ App.use((request, response, next) => {
 });
 // App.use(express.json());==> if this place at below the app.use give 'undefined', always place at above the code
 
-let notes = [
-  {
-    id: 1,
-    content: "HTML is easy at same time hard",
-    date: "2022-1-17T17:30:31.098Z",
-    important: true,
-  },
-  {
-    id: 2,
-    content: "Browser can execute only JavaScript",
-    date: "2022-1-17T18:39:34.091Z",
-    important: false,
-  },
-  {
-    id: 3,
-    content: "GET and POST are the most important methods of HTTP protocol",
-    date: "2022-1-17T19:20:14.298Z",
-    important: true,
-  },
-  {
-    content: "hey there you are lucky",
-    date: "2022-08-06T05:43:27.539Z",
-    important: false,
-    id: 4,
-  },
-];
+// let notes = [
+//   {
+//     id: 1,
+//     content: "HTML is easy at same time hard",
+//     date: "2022-1-17T17:30:31.098Z",
+//     important: true,
+//   },
+//   {
+//     id: 2,
+//     content: "Browser can execute only JavaScript",
+//     date: "2022-1-17T18:39:34.091Z",
+//     important: false,
+//   },
+//   {
+//     id: 3,
+//     content: "GET and POST are the most important methods of HTTP protocol",
+//     date: "2022-1-17T19:20:14.298Z",
+//     important: true,
+//   },
+//   {
+//     content: "hey there you are lucky",
+//     date: "2022-08-06T05:43:27.539Z",
+//     important: false,
+//     id: 4,
+//   },
+// ];
 
 App.get("/", (request, response) => {
   response.send(response.someThis);
@@ -55,7 +55,9 @@ App.get("/", (request, response) => {
   // response.setHeader('Content-Type', 'text/html').send("<h1>hello world</h1>")
 });
 App.get("/notes", (request, response) => {
-  response.json(notes);
+  //showing accessed note from database
+  Note.find().then((result) => response.json(result));
+  // response.json(notes);
 });
 
 App.get("/notes/:id", (request, response) => {
