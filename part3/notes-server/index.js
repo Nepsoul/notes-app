@@ -64,14 +64,27 @@ App.get("/notes/:id", (request, response) => {
   //   console.log(request.params);
   //   console.log(request.body);
 
-  const currentId = Number(request.params.id);
-  const thisNote = notes.find((note) => note.id === currentId);
-  //   if (thisNote) response.send(thisNote);
-  if (thisNote) response.json(thisNote);
-  else
-    response
-      .status(404)
-      .json({ error: 404, message: `there is no note with id ${currentId}` });
+  //error handling
+  Note.findById(request.params.id)
+    .then((note) => {
+      if (note) {
+        response.json(note);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      response.status(500).end();
+    });
+  // const currentId = Number(request.params.id);
+  // const thisNote = notes.find((note) => note.id === currentId);
+  // //   if (thisNote) response.send(thisNote);
+  // if (thisNote) response.json(thisNote);
+  // else
+  //   response
+  //     .status(404)
+  //     .json({ error: 404, message: `there is no note with id ${currentId}` });
 });
 
 App.delete("/notes/:id", (request, response) => {
