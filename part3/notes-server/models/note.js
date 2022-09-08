@@ -19,6 +19,8 @@ const noteSchema = new mongoose.Schema({
   date: Date,
   important: Boolean,
 });
+
+//to remove -id,--v
 noteSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
