@@ -53,19 +53,58 @@ App.get("/notes/:id", (request, response, next) => {
     });
 });
 
-App.delete("/notes/:id", (request, response) => {
-  const currentId = Number(request.params.id);
-  notes = notes.filter((notes) => notes.id !== currentId);
-  response.status(204).end();
+// App.delete("/notes/:id", (request, response) => {
+//   const currentId = Number(request.params.id);
+//   notes = notes.filter((notes) => notes.id !== currentId);
+//   response.status(204).end();
+// });
+App.delete("/notes/:id", (request, response, next) => {
+  Note.findByIdAndRemove(request.params.id)
+    .then((result) => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
 });
-App.post("/notes/", (request, response) => {
-  let myIncomingData = request.body;
-  myIncomingData.id = notes.length + 1;
-  notes.push(myIncomingData);
 
-  //   console.log(request.body);
-  console.log(myIncomingData);
-  response.status(201).json(myIncomingData);
+// App.post("/notes/", (request, response) => {
+//   let myIncomingData = request.body;
+//   myIncomingData.id = notes.length + 1;
+//   notes.push(myIncomingData);
+
+//   //   console.log(request.body);
+//   console.log(myIncomingData);
+//   response.status(201).json(myIncomingData);
+// });
+App.post("/notes", (request, response) => {
+  const body = request.body;
+
+  if (body.content === undefined) {
+    return response.status(400).json({ error: "content missing" });
+  }
+
+  const note = new Note({
+    content: body.content,
+    important: body.important || false,
+    date: new Date(),
+  });
+
+  note.save().then((savedNote) => {
+    response.json(savedNote);
+  });
+});
+App.put("/notes/:id", (request, response, next) => {
+  const body = request.body;
+
+  const note = {
+    content: body.content,
+    important: body.important,
+  };
+
+  Note.findByIdAndUpdate(request.params.id, note, { new: true })
+    .then((updatedNote) => {
+      response.json(updatedNote);
+    })
+    .catch((error) => next(error));
 });
 
 const errorHandler = (error, request, response, next) => {
@@ -74,11 +113,13 @@ const errorHandler = (error, request, response, next) => {
   console.log(error.name);
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
+  } else {
+    return response.status(500).end();
   }
   next();
 };
 
-// this has to be placed beneath all the request methods
+//  this has to be the last loaded middleware.
 App.use(errorHandler);
 
 App.use((request, response, next) => {
