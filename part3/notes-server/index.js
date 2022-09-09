@@ -33,7 +33,7 @@ App.get("/notes", (request, response) => {
   // response.json(notes);
 });
 
-App.get("/notes/:id", (request, response) => {
+App.get("/notes/:id", (request, response, next) => {
   //   console.log(request.params);
   //   console.log(request.body);
 
@@ -48,8 +48,8 @@ App.get("/notes/:id", (request, response) => {
     })
     .catch((error) => {
       console.log(error);
-
-      response.status(400).send({ error: "malformatted id" });
+      next(error);
+      //response.status(400).send({ error: "malformatted id" });
     });
 });
 
@@ -67,6 +67,19 @@ App.post("/notes/", (request, response) => {
   console.log(myIncomingData);
   response.status(201).json(myIncomingData);
 });
+
+const errorHandler = (error, request, response, next) => {
+  //console.error(error.message);
+
+  console.log(error.name);
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
+  }
+  next();
+};
+
+// this has to be placed beneath all the request methods
+App.use(errorHandler);
 
 App.use((request, response, next) => {
   response.status(404).send("<h1>No routes found for this request</h1>");
