@@ -77,8 +77,9 @@ App.delete("/notes/:id", (request, response, next) => {
 // });
 App.post("/notes", (request, response) => {
   const body = request.body;
-
-  if (body.content === undefined) {
+  // console.log("body.content is", body.content);
+  // throwing error while sending empty
+  if (body.content === "") {
     return response.status(400).json({ error: "content missing" });
   }
 
