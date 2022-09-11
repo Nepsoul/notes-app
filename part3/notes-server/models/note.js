@@ -13,9 +13,14 @@ mongoose
   .catch((error) => {
     console.log("error connecting to MongoDB:", error.message);
   });
-
+// error handling via schema
 const noteSchema = new mongoose.Schema({
-  content: String,
+  content: {
+    type: String,
+    minLength: 5,
+    required: true,
+  },
+  //content: String,
   date: Date,
   important: Boolean,
 });
