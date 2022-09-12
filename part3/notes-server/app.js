@@ -29,13 +29,9 @@ App.get("/", (request, response) => {
 App.get("/notes", (request, response) => {
   //showing accessed note from database
   Note.find().then((result) => response.json(result));
-  // response.json(notes);
 });
 
 App.get("/notes/:id", (request, response, next) => {
-  //   console.log(request.params);
-  //   console.log(request.body);
-
   //error handling
   Note.findById(request.params.id)
     .then((note) => {
@@ -48,15 +44,9 @@ App.get("/notes/:id", (request, response, next) => {
     .catch((error) => {
       console.log(error);
       next(error);
-      //response.status(400).send({ error: "malformatted id" });
     });
 });
 
-// App.delete("/notes/:id", (request, response) => {
-//   const currentId = Number(request.params.id);
-//   notes = notes.filter((notes) => notes.id !== currentId);
-//   response.status(204).end();
-// });
 App.delete("/notes/:id", (request, response, next) => {
   Note.findByIdAndRemove(request.params.id)
     .then((result) => {
@@ -65,18 +55,9 @@ App.delete("/notes/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-// App.post("/notes/", (request, response) => {
-//   let myIncomingData = request.body;
-//   myIncomingData.id = notes.length + 1;
-//   notes.push(myIncomingData);
-
-//   //   console.log(request.body);
-//   console.log(myIncomingData);
-//   response.status(201).json(myIncomingData);
-// });
 App.post("/notes", (request, response, next) => {
   const body = request.body;
-  // console.log("body.content is", body.content);
+
   // throwing error while content missing
   if (body.content === "") {
     return response.status(400).json({ error: "content missing" });
@@ -114,9 +95,6 @@ App.use((request, response, next) => {
   response.status(404).send("<h1>No routes found for this request</h1>");
 });
 const errorHandler = (error, request, response, next) => {
-  //console.error(error.message);
-
-  // console.log(error.name);
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
   } else if (error.name === "ValidationError") {
@@ -129,10 +107,3 @@ const errorHandler = (error, request, response, next) => {
 
 //  this has to be the last loaded middleware.
 App.use(errorHandler);
-
-// ////if port has given as variable in process.env then use given port otherwise use default port
-// const PORT = process.env.PORT || "3001";
-
-// App.listen(PORT, () => {
-//   console.log(`server listening ${PORT}`);
-// });
