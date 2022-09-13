@@ -1,25 +1,18 @@
 const express = require("express");
 const cors = require("cors");
+const middleware = require("./utils/middleware");
 
 //importing Note from database through env variable
 const Note = require("./models/note");
-
 const App = express();
 
 //App.use..... is middleware
 App.use(express.static("build"));
 App.use(cors());
 App.use(express.json());
-
-App.use((request, response, next) => {
-  console.log("Method:", request.method);
-  console.log("Path:  ", request.path);
-  console.log("Body:  ", request.body);
-  console.log("---");
-  // response.someThis = "hello world";
-  next();
-});
 // App.use(express.json());==> if this place at below the app.use give 'undefined', always place at above the code
+
+App.use(middleware.requestLogger); //middleware imported through middleware.js file
 
 App.get("/", (request, response) => {
   response.send(response.someThis);
@@ -91,19 +84,6 @@ App.put("/notes/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-App.use((request, response, next) => {
-  response.status(404).send("<h1>No routes found for this request</h1>");
-});
-const errorHandler = (error, request, response, next) => {
-  if (error.name === "CastError") {
-    return response.status(400).send({ error: "malformatted id" });
-  } else if (error.name === "ValidationError") {
-    //adding validation error
-    console.log("validation error");
-    return response.status(400).json({ error: error.message });
-  }
-  next(error);
-};
+App.use(middleware.unknownEndpoint); //no route found error through this middleware
 
-//  this has to be the last loaded middleware.
-App.use(errorHandler);
+App.use(middleware.errorHandler);
