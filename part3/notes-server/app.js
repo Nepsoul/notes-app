@@ -2,8 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const middleware = require("./utils/middleware");
 
-//importing Note from database through env variable
-const Note = require("./models/note");
 const notesRouter = require("./controllers/notes");
 const App = express();
 
@@ -91,3 +89,5 @@ App.use(middleware.unknownEndpoint); //no route found error through this middlew
 
 App.use(middleware.errorHandler);
 //this has to be last loaded middleware
+
+module.exports = App;
