@@ -15,7 +15,7 @@ App.use(middleware.requestLogger); //middleware imported through middleware.js f
 
 App.use("/notes", notesRouter); //calling notes api via notesRouter
 
-App.use(middleware.unknownEndpoint); //no route found error through this middleware
+App.use(middleware.unknownEndpoint); //no route, found error through this middleware
 
 App.use(middleware.errorHandler);
 //this has to be last loaded middleware
