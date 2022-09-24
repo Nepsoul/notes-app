@@ -29,6 +29,8 @@ beforeEach(async () => {
 });
 
 test("notes are returned as json", async () => {
+  //only(test.only :jest method) method run particularly this test only frm this file but frm other files runs all the tests
+  //npm test --tests/file name for run one file only from commandline
   await api
     .get("/api/notes")
     .expect(200)
