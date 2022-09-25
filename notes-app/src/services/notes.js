@@ -1,9 +1,12 @@
 import axios from "axios";
 // const baseUrl = "http://localhost:3001/notes";
-const baseUrl = "/notes"; //after copying buildfolder,
+const baseUrl = "/api/notes"; //using api route //after copying buildfolder,
 const getAll = () => {
-  //let response = axios.get(baseUrl);
-  return axios.get(baseUrl);
+  let response = axios.get(baseUrl);
+  //return axios.get(baseUrl);
+  console.log(response.data);
+  console.log(response);
+  return response;
 };
 
 const create = (newObject) => {
