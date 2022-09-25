@@ -2,6 +2,7 @@ const notesRouter = require("express").Router();
 const Note = require("../models/note"); //importing note model
 
 notesRouter.get("/", async (request, response) => {
+  //refactoring using async/await
   const MyNotes = await Note.find({});
   response.json(MyNotes);
 });
@@ -18,7 +19,8 @@ notesRouter.get("/:id", (request, response, next) => {
     .catch((error) => next(error));
 });
 
-notesRouter.post("/", (request, response, next) => {
+notesRouter.post("/", async (request, response, next) => {
+  //refactoring usnig async/await
   const body = request.body;
 
   const note = new Note({
@@ -26,13 +28,16 @@ notesRouter.post("/", (request, response, next) => {
     important: body.important || false,
     date: new Date(),
   });
-
-  note
-    .save()
-    .then((savedNote) => {
-      response.json(savedNote);
-    })
-    .catch((error) => next(error));
+  try {
+    const newNote = await note.save();
+    response.status(201).json(newNote);
+  } catch (error) {
+    next(error);
+  }
+  //     .then((savedNote) => {
+  //       response.status(201).json(savedNote); //setting status code
+  //     })
+  //     .catch((error) => next(error));
 });
 
 notesRouter.delete("/:id", (request, response, next) => {
