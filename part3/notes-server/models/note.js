@@ -25,6 +25,10 @@ const noteSchema = new mongoose.Schema({
   //content: String,
   date: Date,
   important: Boolean,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 //to remove -id,--v
