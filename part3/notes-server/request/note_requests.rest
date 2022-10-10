@@ -6,11 +6,12 @@ DELETE   http://localhost:3001/notes/
 ###
 POST    http://localhost:3001/api/notes/
 content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvdmVseSIsImlkIjoiNjM0MzliMDMxODBiMjk1ODU0ZjM0OTQzIiwiaWF0IjoxNjY1Mzk4ODcxfQ.ZL_ofKfR5EEhH5EA69dIe4eXG8vv1rcl9-zs2iY8PHw
 
 {
-    "content": "sitama",
-    "important": "true", 
-    "userId":"63439b03180b295854f34943"
+    "content": "serizawa created by token",
+    "important": "true"
+    
 }
 
 ###
