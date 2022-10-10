@@ -1,15 +1,24 @@
-GET  http://localhost:3001/notes/
+GET  http://localhost:3001/api/notes/
 
 ###
 DELETE   http://localhost:3001/notes/
 
 ###
-POST    http://localhost:3001/notes/
+POST    http://localhost:3001/api/notes/
 content-type: application/json
 
 {
-    "content": "you are lovely",
-    "important": "true" 
-    
+    "content": "dashain",
+    "important": "true", 
+    "userId":"63438827180b295854f3492d"
 }
 
+###
+POST    http://localhost:3001/api/users/
+content-type: application/json
+
+{
+    "username": "lovely",
+    "name": "mikka",
+    "password": "rm"
+}
