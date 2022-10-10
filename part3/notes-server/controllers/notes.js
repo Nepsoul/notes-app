@@ -4,7 +4,10 @@ const User = require("../models/user");
 
 notesRouter.get("/", async (request, response) => {
   //refactoring using async/await
-  const MyNotes = await Note.find({});
+  const MyNotes = await Note.find({}).populate("user", {
+    name: 1,
+    username: 1,
+  });
   response.json(MyNotes);
 });
 
@@ -34,8 +37,8 @@ notesRouter.post("/", async (request, response, next) => {
   });
   try {
     const newNote = await note.save();
-    user.notes.concat(newNote._id);
-    user.save();
+    user.notes = user.notes.concat(newNote._id);
+    await user.save();
     response.status(201).json(newNote);
   } catch (error) {
     next(error);
