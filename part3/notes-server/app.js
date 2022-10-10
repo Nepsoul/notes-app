@@ -4,6 +4,7 @@ const middleware = require("./utils/middleware");
 
 const notesRouter = require("./controllers/notes");
 const usersRouter = require("./controllers/users");
+const loginRouter = require("./controllers/login"); //for token
 const App = express();
 
 //App.use..... is middleware
@@ -16,6 +17,7 @@ App.use(middleware.requestLogger); //middleware imported through middleware.js f
 
 App.use("/api/notes", notesRouter); //calling notes api via notesRouter (using api)
 App.use("/api/users", usersRouter);
+App.use("/api/login", loginRouter); //for token
 App.use(middleware.unknownEndpoint); //no route, found error through this middleware
 
 App.use(middleware.errorHandler);
