@@ -93,32 +93,44 @@ const App = () => {
     }
   };
 
+  const loginForm = () => (
+    <form onSubmit={handleLogin}>
+      <div>
+        username
+        <input
+          type="text"
+          value={username}
+          name="Username"
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
+        password
+        <input
+          type="password"
+          value={password}
+          name="Password"
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type="submit">login</button>
+    </form>
+  );
+
+  const noteForm = () => (
+    <form onSubmit={addNote}>
+      <input value={newNote} onChange={handleNoteChange} />
+      <button type="submit">submit</button>
+    </form>
+  );
+
   return (
     <>
       <h1>Heroku Notes full deploy</h1>
       <Notification message={message} />
 
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
+      {/* {loginFrom()} */}
+      {user === null ? loginForm() : noteForm()}
 
       {/* </><button onClick={() => setshowAll(!showAll)}> */}
       <button onClick={random}>show {showAll ? "All" : "Important"}</button>
@@ -148,10 +160,10 @@ const App = () => {
           />
         ))}
       </ul>
-      <form onSubmit={addNote}>
+      {/* <form onSubmit={addNote}>
         <input value={newNote} onChange={handleNoteChange} />
         <button type="submit">submit</button>
-      </form>
+      </form> */}
       <Footer />
     </>
   );
