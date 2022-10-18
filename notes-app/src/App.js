@@ -5,6 +5,7 @@ import noteService from "./services/notes";
 import Note from "./components/Note";
 import Footer from "./components/Footer";
 import Notification from "./components/Notification";
+import loginService from "./services/login";
 
 const App = () => {
   //1.we need to get data from server
@@ -20,7 +21,11 @@ const App = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setnewNote] = useState("a new note");
   const [showAll, setshowAll] = useState(true);
-  const [message, setMessage] = useState(null);
+  const [message, setErrorMessage] = useState(null);
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     noteService.getAll().then((response) => {
@@ -48,9 +53,9 @@ const App = () => {
       .catch((error) => {
         console.log("this is error");
         console.dir(error);
-        setMessage(error.response.data.error);
+        setErrorMessage(error.response.data.error);
         setTimeout(() => {
-          setMessage("");
+          setErrorMessage("");
         }, 5000);
       });
   };
@@ -65,10 +70,56 @@ const App = () => {
     ? notes
     : notes.filter((tog) => tog.important === true);
 
+  // const handleLogin = (event) => {
+  //   event.preventDefault();
+  //   console.log("logging in with", username, password);
+  // };
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      const user = await loginService.login({
+        username,
+        password,
+      });
+      setUser(user);
+      setUsername("");
+      setPassword("");
+    } catch (exception) {
+      setErrorMessage("Wrong credentials");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+    }
+  };
+
   return (
     <>
       <h1>Heroku Notes full deploy</h1>
       <Notification message={message} />
+
+      <form onSubmit={handleLogin}>
+        <div>
+          username
+          <input
+            type="text"
+            value={username}
+            name="Username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div>
+          password
+          <input
+            type="password"
+            value={password}
+            name="Password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>
+
       {/* </><button onClick={() => setshowAll(!showAll)}> */}
       <button onClick={random}>show {showAll ? "All" : "Important"}</button>
       <ul>
