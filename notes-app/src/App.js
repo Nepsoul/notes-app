@@ -29,8 +29,8 @@ const App = () => {
 
   useEffect(() => {
     noteService.getAll().then((response) => {
-      console.log(typeof response.data);
-      setNotes(response.data);
+      //console.log(typeof response.data);
+      setNotes(response);
     });
   }, []);
 
@@ -47,6 +47,7 @@ const App = () => {
     noteService
       .create(noto)
       .then((response) => {
+        console.log(response);
         setNotes(notes.concat(response.data));
         setnewNote("");
       })
@@ -82,6 +83,7 @@ const App = () => {
         username,
         password,
       });
+      noteService.setToken(user.token);
       setUser(user);
       setUsername("");
       setPassword("");
@@ -125,7 +127,7 @@ const App = () => {
   );
 
   return (
-    <>
+    <div>
       <h1>Heroku Notes full deploy</h1>
       <Notification message={message} />
 
@@ -142,20 +144,29 @@ const App = () => {
             toggleImportance={() => {
               //toggleImportanceOf(note.id)
 
-              console.log(
-                `button is clicked by function passed from API for id ${notex.id}`
-              );
+              // console.log(
+              //   `button is clicked by function passed from API for id ${notex.id}`
+              // );
               //1.make new object from current note with toggled importand field
               const updatedNote = { ...notex, important: !notex.important };
               //2.update backend server with the updated object
               //axios.put(`http://localhost:3001/notes/${notex.id}`, updatedNote)
-              noteService.update(notex.id, updatedNote).then((response) => {
-                console.log(response.data);
-                //3.now, also update the frontend state with the updated note
-                setNotes(
-                  notes.map((x) => (x.id !== notex.id ? x : response.data))
-                );
-              });
+              noteService
+                .update(notex.id, updatedNote)
+                .then((response) => {
+                  console.log(response.data);
+                  //3.now, also update the frontend state with the updated note
+                  setNotes(
+                    notes.map((x) => (x.id !== notex.id ? x : response))
+                  );
+                  setnewNote("");
+                })
+                .catch((error) => {
+                  console.log("caught the error");
+                  setErrorMessage("Note does not exisit anymore");
+                  setTimeout(() => setErrorMessage(null), 2000);
+                  setNotes(notes.filter((x) => x.id !== notes.id));
+                });
             }}
           />
         ))}
@@ -165,7 +176,7 @@ const App = () => {
         <button type="submit">submit</button>
       </form> */}
       <Footer />
-    </>
+    </div>
   );
 };
 

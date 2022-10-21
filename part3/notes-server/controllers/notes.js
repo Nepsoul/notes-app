@@ -54,12 +54,13 @@ notesRouter.post("/", async (request, response, next) => {
     });
 
     const newNote = await note.save();
+    console.log(newNote);
     user.notes = user.notes.concat(newNote._id);
     await user.save();
+    response.status(201).json(newNote);
   } catch (error) {
     next(error);
   }
-  response.status(201).json(newNote);
   //     .then((savedNote) => {
   //       response.status(201).json(savedNote); //setting status code
   //     })
