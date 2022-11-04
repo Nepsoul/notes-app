@@ -8,11 +8,11 @@ const setToken = (newToken) => {
 };
 
 const getAll = () => {
-  let response = axios.get(baseUrl);
+  let request = axios.get(baseUrl);
   //return axios.get(baseUrl);
   // console.log(response.data);
   // console.log(response);
-  return response.then((response) => response.data);
+  return request.then((response) => response.data);
 };
 
 const create = (newObject) => {
