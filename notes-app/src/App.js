@@ -48,7 +48,9 @@ const App = () => {
       .create(noto)
       .then((response) => {
         console.log(response);
-        setNotes(notes.concat(response.data));
+        setNotes(notes.concat(response));
+        console.log(response.data, "i am response data");
+        console.log(response, "response");
         setnewNote("");
       })
       .catch((error) => {
