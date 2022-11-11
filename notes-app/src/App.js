@@ -49,7 +49,7 @@ const App = () => {
       .then((response) => {
         console.log(response);
         setNotes(notes.concat(response));
-        console.log(response.data, "i am response data");
+        //console.log(response.data, "i am response data");
         console.log(response, "response");
         setnewNote("");
       })
@@ -156,7 +156,7 @@ const App = () => {
               noteService
                 .update(notex.id, updatedNote)
                 .then((response) => {
-                  console.log(response.data);
+                  console.log(response);
                   //3.now, also update the frontend state with the updated note
                   setNotes(
                     notes.map((x) => (x.id !== notex.id ? x : response))
