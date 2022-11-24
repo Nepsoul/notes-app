@@ -5,6 +5,8 @@ import noteService from "./services/notes";
 import Note from "./components/Note";
 import Footer from "./components/Footer";
 import Notification from "./components/Notification";
+import LoginForm from "./components/LoginForm";
+import NoteForm from "./components/NoteForm";
 import loginService from "./services/login";
 
 const App = () => {
@@ -108,34 +110,19 @@ const App = () => {
   };
 
   const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
+    <LoginForm
+      username={username}
+      password={password}
+      handleSubmit={handleLogin}
+    />
   );
 
   const noteForm = () => (
-    <form onSubmit={addNote}>
-      <input value={newNote} onChange={handleNoteChange} />
-      <button type="submit">submit</button>
-    </form>
+    <NoteForm
+      addNote={addNote}
+      newNote={newNote}
+      handleNoteChange={handleNoteChange}
+    />
   );
 
   return (
