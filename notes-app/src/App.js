@@ -22,7 +22,7 @@ const App = () => {
    */
 
   const [notes, setNotes] = useState([]);
-  const [newNote, setnewNote] = useState("a new note");
+  // const [newNote, setnewNote] = useState("a new note");
   const [showAll, setshowAll] = useState(true);
   const [message, setErrorMessage] = useState(null);
 
@@ -46,38 +46,44 @@ const App = () => {
     }
   }, []);
 
-  const addNote = (event) => {
-    event.preventDefault();
-
-    let noto = {
-      //id: notes.length + 1,
-      content: newNote,
-      date: new Date().toISOString(),
-      important: Math.random() < 0.5 ? true : false,
-    };
-
-    noteService
-      .create(noto)
-      .then((response) => {
-        console.log(response);
-        setNotes(notes.concat(response));
-        //console.log(response.data, "i am response data");
-        console.log(response, "response");
-        setnewNote("");
-      })
-      .catch((error) => {
-        console.log("this is error");
-        console.dir(error);
-        setErrorMessage(error.response.data.error);
-        setTimeout(() => {
-          setErrorMessage("");
-        }, 5000);
-      });
+  const addNote = (noteObject) => {
+    noteService.create(noteObject).then((returnedNote) => {
+      setNotes(notes.concat(returnedNote));
+    });
   };
 
-  const handleNoteChange = (event) => {
-    setnewNote(event.target.value);
-  };
+  // const addNote = (event) => {
+  //   event.preventDefault();
+
+  //   let noto = {
+  //     //id: notes.length + 1,
+  //     content: newNote,
+  //     date: new Date().toISOString(),
+  //     important: Math.random() < 0.5 ? true : false,
+  //   };
+
+  //   noteService
+  //     .create(noto)
+  //     .then((response) => {
+  //       console.log(response);
+  //       setNotes(notes.concat(response));
+  //       //console.log(response.data, "i am response data");
+  //       console.log(response, "response");
+  //       setnewNote("");
+  //     })
+  //     .catch((error) => {
+  //       console.log("this is error");
+  //       console.dir(error);
+  //       setErrorMessage(error.response.data.error);
+  //       setTimeout(() => {
+  //         setErrorMessage("");
+  //       }, 5000);
+  //     });
+  // };
+
+  // const handleNoteChange = (event) => {
+  //   setnewNote(event.target.value);
+  // };
 
   const random = () => setshowAll(!showAll);
 
@@ -124,11 +130,7 @@ const App = () => {
 
   const noteForm = () => (
     <Togglable buttonLabel="new note">
-      <NoteForm
-        onSubmit={addNote}
-        value={newNote}
-        handleChange={handleNoteChange}
-      />
+      <NoteForm createNote={addNote} />
     </Togglable>
   );
 
@@ -173,7 +175,7 @@ const App = () => {
                   setNotes(
                     notes.map((x) => (x.id !== notex.id ? x : response))
                   );
-                  setnewNote("");
+                  // setnewNote("");
                 })
                 .catch((error) => {
                   console.log("caught the error");
