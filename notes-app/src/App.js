@@ -123,11 +123,13 @@ const App = () => {
   );
 
   const noteForm = () => (
-    <NoteForm
-      addNote={addNote}
-      newNote={newNote}
-      handleNoteChange={handleNoteChange}
-    />
+    <Togglable buttonLabel="new note">
+      <NoteForm
+        onSubmit={addNote}
+        value={newNote}
+        handleChange={handleNoteChange}
+      />
+    </Togglable>
   );
 
   return (
