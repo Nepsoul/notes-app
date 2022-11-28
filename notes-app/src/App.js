@@ -5,6 +5,7 @@ import noteService from "./services/notes";
 import Note from "./components/Note";
 import Footer from "./components/Footer";
 import Notification from "./components/Notification";
+import Togglable from "./components/Togglable";
 import LoginForm from "./components/LoginForm";
 import NoteForm from "./components/NoteForm";
 import loginService from "./services/login";
@@ -110,11 +111,15 @@ const App = () => {
   };
 
   const loginForm = () => (
-    <LoginForm
-      username={username}
-      password={password}
-      handleSubmit={handleLogin}
-    />
+    <Togglable buttonLabel="show me login">
+      <LoginForm
+        username={username}
+        password={password}
+        handleUsernameChange={({ target }) => setUsername(target.value)}
+        handlePasswordChange={({ target }) => setPassword(target.value)}
+        handleSubmit={handleLogin}
+      />
+    </Togglable>
   );
 
   const noteForm = () => (
