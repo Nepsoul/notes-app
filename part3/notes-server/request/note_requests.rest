@@ -6,10 +6,10 @@ DELETE   http://localhost:3001/notes/
 ###
 POST    http://localhost:3001/api/notes/
 content-type: application/json
-Authorization: bearer JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvdmVseSIsImlkIjoiNjM0MzliMDMxODBiMjk1ODU0ZjM0OTQzIiwiaWF0IjoxNjY1Mzk4ODcxfQ.ZL_ofKfR5EEhH5EA69dIe4eXG8vv1rcl9-zs2iY8PHw
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImxvdmVseSIsImlkIjoiNjM0MzliMDMxODBiMjk1ODU0ZjM0OTQzIiwiaWF0IjoxNjY5NzEwOTUzLCJleHAiOjE2Njk3MTQ1NTN9.9vYmx2wfbdTbxJwed_buY-yBURGvjVyLjp-3iV-ySxw
 
 {
-    "content": "note created by token with wrong token",
+    "content": "note created from child to parent component",
     "important": "true"
     
 }

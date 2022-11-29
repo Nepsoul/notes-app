@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 //import axios from "axios";
 import noteService from "./services/notes";
 
@@ -11,6 +11,7 @@ import NoteForm from "./components/NoteForm";
 import loginService from "./services/login";
 
 const App = () => {
+  const noteFormRef = useRef();
   //1.we need to get data from server
   //2.const [notes, setNotes] = useState([]) this source will be the data we get from server
 
@@ -49,6 +50,7 @@ const App = () => {
   const addNote = (noteObject) => {
     noteService.create(noteObject).then((returnedNote) => {
       setNotes(notes.concat(returnedNote));
+      noteFormRef.current.toggleVisibility();
     });
   };
 
@@ -129,7 +131,7 @@ const App = () => {
   );
 
   const noteForm = () => (
-    <Togglable buttonLabel="new note">
+    <Togglable buttonLabel="new note" ref={noteFormRef}>
       <NoteForm createNote={addNote} />
     </Togglable>
   );
