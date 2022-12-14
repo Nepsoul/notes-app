@@ -15,7 +15,6 @@ test("renders content", () => {
   const { container } = render(
     <Note note={note} toggleImportance={mockHandler} />
   );
-  screen.debug();
   const div = container.querySelector(".note");
   expect(div).toHaveTextContent(
     "Component testing is done with react-testing-library"
@@ -24,7 +23,6 @@ test("renders content", () => {
   const element = screen.getByText(
     "Component testing is done with react-testing-library"
   );
-  screen.debug(element);
   expect(element).toBeDefined();
 });
 
