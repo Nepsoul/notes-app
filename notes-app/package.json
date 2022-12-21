@@ -14,7 +14,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server --port 3001 --watch db.json"
+    "server": "json-server --port 3001 --watch db.json",
+    "cypress:open": "cypress open"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {
@@ -39,6 +40,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
+    "cypress": "^12.1.0",
     "eslint": "^8.23.1",
     "eslint-plugin-jest": "^27.1.6",
     "jest-watch-typeahead": "^0.6.5",

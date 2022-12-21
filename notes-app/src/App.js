@@ -180,7 +180,7 @@ const App = () => {
                   // setnewNote("");
                 })
                 .catch((error) => {
-                  console.log("caught the error");
+                  console.log("caught the error", error);
                   setErrorMessage("Note does not exisit anymore");
                   setTimeout(() => setErrorMessage(null), 2000);
                   setNotes(notes.filter((x) => x.id !== notes.id));
