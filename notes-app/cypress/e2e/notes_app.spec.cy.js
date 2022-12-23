@@ -14,7 +14,10 @@ describe("Note app", function () {
 
   it("user can login", function () {
     cy.contains("login").click();
-    cy.get("input:first").type("mluukkai");
-    cy.get("input:last").type("salainen");
+    cy.get("#username").type("testing");
+    cy.get("#password").type("testing");
+    cy.get("#login-button").click();
+
+    cy.contains("testing logged-in");
   });
 });
