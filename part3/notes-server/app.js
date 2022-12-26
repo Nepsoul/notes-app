@@ -18,6 +18,10 @@ App.use(middleware.requestLogger); //middleware imported through middleware.js f
 App.use("/api/notes", notesRouter); //calling notes api via notesRouter (using api)
 App.use("/api/users", usersRouter);
 App.use("/api/login", loginRouter); //for token
+if (process.env.NODE_ENV === "test") {
+  const testingRouter = require("./controllers/testing");
+  App.use("/api/testing", testingRouter);
+}
 App.use(middleware.unknownEndpoint); //no route, found error through this middleware
 
 App.use(middleware.errorHandler);
