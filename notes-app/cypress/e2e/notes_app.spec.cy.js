@@ -30,11 +30,7 @@ describe("Note app", function () {
 
   it("user can login", function () {
     cy.contains("login").click();
-    cy.get("#username").type("testing");
-    cy.get("#password").type("testing");
-    cy.get("#login-button").click();
-
-    cy.contains("testing logged-in");
+    cy.login({ username: "testing", password: "testing" });
   });
 
   describe("when logged in", function () {
