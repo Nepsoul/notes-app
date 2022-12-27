@@ -19,26 +19,27 @@ describe("Note app", function () {
     cy.contains("login").click();
   });
 
-  // it.only("login fails with wrong password", function () {
-  //   cy.contains("login").click();
-  //   cy.get("#username").type("testing");
-  //   cy.get("#password").type("wrong");
-  //   cy.get("#login-button").click();
+  it("login fails with wrong password", function () {
+    cy.contains("login").click();
+    cy.get("#username").type("testing");
+    cy.get("#password").type("wrong");
+    cy.get("#login-button").click();
 
-  //   cy.get("#error").should("contain", "Wrong credentials");
-  // });
+    cy.get("#error").should("contain", "Wrong credentials");
+  });
 
   it("user can login", function () {
     cy.contains("login").click();
-    cy.login({ username: "testing", password: "testing" });
+    cy.get("#username").type("testing");
+    cy.get("#password").type("testing");
+    cy.get("#login-button").click();
+
+    cy.contains("testing logged-in");
   });
 
   describe("when logged in", function () {
     beforeEach(function () {
-      cy.contains("login").click();
-      cy.get("input:first").type("testing");
-      cy.get("input:last").type("testing");
-      cy.get("#login-button").click();
+      cy.login({ username: "testing", password: "testing" });
     });
 
     it("a new note can be created", function () {
@@ -48,21 +49,17 @@ describe("Note app", function () {
       cy.contains("a note created by cypress");
     });
 
-    describe("and a note exists", function () {
+    describe("and several notes exist", function () {
       beforeEach(function () {
-        cy.contains("new note").click();
-        //cy.get("input").type("another note cypress");
-        //cy.contains("save").click();
-        cy.createNote({
-          content: "another note cypress",
-          important: false,
-        });
+        cy.createNote({ content: "first note", important: false });
+        cy.createNote({ content: "second note", important: false });
+        cy.createNote({ content: "third note", important: false });
       });
 
-      it.only("it can be made important", function () {
-        cy.contains("another note cypress").contains("make important").click();
+      it("one of those can be made important", function () {
+        cy.contains("second note").contains("make important").click();
 
-        cy.contains("another note cypress").contains("make not important");
+        cy.contains("second note").contains("make not important");
       });
     });
   });
